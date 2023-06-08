@@ -16,8 +16,16 @@
     <img src="./descarga.jpg" id="imgPrueba" alt="">
     <canvas id="imgSaquese"></canvas>
     <canvas id="imgSaquese2"></canvas>
-    <button id="btnGa" onclick=" Pintado(canvasPintado2, 'cityscapes')
-    .then(pintarColores)">Analizar img</button>
+    <select id="mySelect">
+        <option value="" hidden>Selecciona</option>
+        <option value="pascal">pascal</option>
+        <option value="cityscapes">cityscapes</option>
+        <option value="ade20k">ade20k</option>
+    </select>
+    <button id="btnGa"
+        onclick="Pintado(canvasPintado2, `${document.getElementById('mySelect').value}`).then(pintarColores)">Analizar
+        img</button>
+    <div id="colores"></div>
     <script>
         const loadModel = async (nameModel) => {
             const modelName = nameModel;   // set to your preferred model, either `pascal`, `cityscapes` or `ade20k`
@@ -66,28 +74,24 @@
             console.log(modeloentrenado)
             return { canvoso, modeloentrenado }
         }
-        const pintarColores = ({ modeloentrenado, canvoso }) => {
+        const pintarColores = (objectPintado) => {
+            const { canvoso, modeloentrenado } = objectPintado;
+            const colores = document.getElementById("colores")
+            colores.innerHTML = ""
             // const parrafo = document.createElement('p');
             const ColorPik = modeloentrenado.legend
             // parrafo
             // .innerText = `${JSON.stringify(canvoso.labels)} ${JSON.stringify(ColorPik)}`;
             for (let color in ColorPik) {
-                const colorElement = document.createElement('p');
-                console.log(color);
-                console.log(ColorPik[color])
                 const [rojo, verde, azul] = ColorPik[color]
-                console.log(`rgb(${rojo},${verde},${azul})`)
-                colorElement.innerText = `${color}`
-                colorElement.style.width = "100px"
-                colorElement.style.height = "100px";
-                colorElement.style.display = "inline-block"
-                colorElement.style.backgroundColor = `rgb(${rojo},${verde},${azul})`
-                document.body.appendChild(colorElement)
+                colores.innerHTML += `
+                <span style="width:100px;height:100px;display:inline-block;background-color:rgb(${rojo},${verde},${azul})">
+                    <p style="background-color:#DFDFDFBA;color:#000000;text-align:center">${color}</p>    
+                </span>
+                `
             }
-            // document.body.appendChild(parrafo);
-
         }
-       
+
     </script>
 </body>
 
