@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "@tensorflow-models/deeplab": "^0.2.1",
+    "@tensorflow/tfjs": "^4.6.0"
+  },
+  "name": "trabajo-grpal",
+  "version": "1.0.0",
+  "main": "deep-lab.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

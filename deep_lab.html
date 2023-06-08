@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/deeplab@0.2.1/dist/deeplab.min.js"></script>
+</head>
+
+<body>
+
+
+    <img src="./cityscapes.jpg" id="imgPrueba" alt="">
+    <canvas id="imgSaquese"></canvas>
+    <canvas id="imgSaquese2"></canvas>
+    <button id="btnGa">Ver Wea</button>
+    <script>
+        tf.tidy(() => {
+            const loadModel = async (nameModel) => {
+                const modelName = nameModel;   // set to your preferred model, either `pascal`, `cityscapes` or `ade20k`
+                const quantizationBytes = 2;  // either 1, 2 or 4
+                return await deeplab.load({ base: modelName, quantizationBytes });
+            };
+            const img = document.getElementById('imgPrueba')
+            const canvasPintado = document.getElementById('imgSaquese');
+            const canvasPintado2 = document.getElementById('imgSaquese2');
+            document.getElementById('btnGa')
+            .addEventListener('click',a)
+            function a() {
+
+                const imgTensor = tf.browser.fromPixels(img)
+                // const input = tf.zeros([227, 500, 3]);
+                // ...
+                // const imgRelizeada = tf.image.resizeBilinear(imgTensor, [100, 100]).div(255)
+                // // console.log(imgRelizeada.dataSync());
+                // tf.browser.toPixels(imgRelizeada, canvasPintado)
+
+                async function Pintado(img, canvas,modelName="pascal") {
+                    const cargamodelo = await loadModel(modelName);
+                    const canvoso = { canvas }
+                    const modeloentrenado = await cargamodelo.segment(img, canvoso)
+                    console.log(canvoso)
+                    console.log(modeloentrenado)
+                    return { canvoso, modeloentrenado }
+                }
+                Pintado(imgTensor, canvasPintado2,'cityscapes')
+                    .then(({ modeloentrenado, canvoso }) => {
+                        // const parrafo = document.createElement('p');
+                        const ColorPik = modeloentrenado.legend
+                        // parrafo
+                        // .innerText = `${JSON.stringify(canvoso.labels)} ${JSON.stringify(ColorPik)}`;
+                        for(let color in ColorPik){
+                            const colorElement = document.createElement('p');
+                            console.log(color);
+                            console.log(ColorPik[color])
+                            const [rojo,verde,azul] = ColorPik[color]
+                            console.log(`rgb(${rojo},${verde},${azul})`)
+                            colorElement.innerText = `${color}`
+                            colorElement.style.width = "100px"
+                            colorElement.style.height = "100px";
+                            colorElement.style.display = "inline-block"
+                            colorElement.style.backgroundColor = `rgb(${rojo},${verde},${azul})`
+                            document.body.appendChild(colorElement)
+                        }
+                        // document.body.appendChild(parrafo);
+                        
+                    })
+            }
+            // loadModel()
+            //     .then((model) => { console.log("pasado por el modelo xd"); return model.segment(imgTensor,{canvas:canvasPintado2}) })
+            //     .then(
+            //         (img) =>
+            //             {
+            //                 console.log(img)
+            //                 const segmentationMap = img["segmentationMap"]
+            //                 // const segmentationImage = deeplab.toSegmentationMap(segmentationMap);
+            //                 // console.log(deeplab)
+            //                 // console.log(deeplab.getColormap(segmentationMap))
+            //                 // const imgTensor = tf.tensor(segmentationMap).div(255)
+
+            //                 // console.log(tensorNuevoImgRelizeada)
+            //                 // tf.browser.toPixels(imgTensor, canvasPintado2)
+            //             }
+
+            //             );
+        });
+    </script>
+</body>
+
+</html>
