@@ -5,28 +5,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Deeplab Model</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/deeplab@0.2.1/dist/deeplab.min.js"></script>
 </head>
 
 <body>
 
-
-    <input type="file" id="imagenInput" accept="image/*" onchange="cargarImagen(event)">
+    <h1 style="text-align: center;">Deeplab</h1>
+    <input type="file" id="imagenInput" accept="image/*" onchange="cargarImagen(event)" style="display: block;margin: auto;">
     <img id="imagenMostrada" src="" alt="">
     <canvas id="imgSaquese"></canvas>
 
-    <select id="mySelect">
+    <select id="mySelect" style="display: block;margin: auto;">
         <option value="" hidden>Selecciona</option>
         <option value="pascal">pascal</option>
         <option value="cityscapes">cityscapes</option>
         <option value="ade20k">ade20k</option>
     </select>
     <button id="btnGa"
+        style="display: block;margin: .5rem auto;"
         onclick="Pintado(canvasPintado2, `${document.getElementById('mySelect').value}`).then(pintarColores)">Analizar
         img</button>
-    <div>
+    <div style="margin: .3rem auto; text-align: center;">
         <p style="display: inline-block;"><strong>Estado:</strong></p>
         <p style="display: inline-block;" id="estado">Sin carga</p>
     </div>
@@ -41,7 +42,9 @@
             reader.onload = function () {
                 var dataURL = reader.result;
                 var imagenMostrada = document.getElementById('imagenMostrada');
-                imagenMostrada.style.maxWidth = "500px"
+                imagenMostrada.style.maxWidth = "500px";
+                imagenMostrada.style.display = "block"
+                imagenMostrada.style.margin = "auto auto"
                 imagenMostrada.src = dataURL;
 
                 // Asignar la imagen a una variable
