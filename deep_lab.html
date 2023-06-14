@@ -15,7 +15,6 @@
     <h1 style="text-align: center;">Deeplab</h1>
     <input type="file" id="imagenInput" accept="image/*" onchange="cargarImagen(event)" style="display: block;margin: auto;">
     <img id="imagenMostrada" src="" alt="">
-    <canvas id="imgSaquese"></canvas>
 
     <select id="mySelect" style="display: block;margin: auto;">
         <option value="" hidden>Selecciona</option>
@@ -31,8 +30,8 @@
         <p style="display: inline-block;"><strong>Estado:</strong></p>
         <p style="display: inline-block;" id="estado">Sin carga</p>
     </div>
-    <canvas id="imgSaquese2"></canvas>
-    <div id="colores"></div>
+    <canvas id="imgSaquese2" style="display: flex;margin: .3rem auto; gap:3rem; width: min-content;"></canvas>
+    <div id="colores" style="display: flex;margin: .3rem auto; gap:3rem; width: min-content;"></div>
     <script>
         function cargarImagen(event) {
             var input = event.target;
@@ -60,7 +59,6 @@
             return await deeplab.load({ base: modelName, quantizationBytes });
         };
         const img = document.getElementById('imagenMostrada')
-        const canvasPintado = document.getElementById('imgSaquese');
         const canvasPintado2 = document.getElementById('imgSaquese2');
 
         // const input = tf.zeros([227, 500, 3]);
