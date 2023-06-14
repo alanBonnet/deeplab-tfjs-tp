@@ -16,7 +16,7 @@
     <input type="file" id="imagenInput" accept="image/*" onchange="cargarImagen(event)">
     <img id="imagenMostrada" src="" alt="">
     <canvas id="imgSaquese"></canvas>
-    
+
     <select id="mySelect">
         <option value="" hidden>Selecciona</option>
         <option value="pascal">pascal</option>
@@ -26,9 +26,10 @@
     <button id="btnGa"
         onclick="Pintado(canvasPintado2, `${document.getElementById('mySelect').value}`).then(pintarColores)">Analizar
         img</button>
-    <p><strong>Estado:</strong>
-    <p id="estado">Sin carga</p>
-    </p>
+    <div>
+        <p style="display: inline-block;"><strong>Estado:</strong></p>
+        <p style="display: inline-block;" id="estado">Sin carga</p>
+    </div>
     <canvas id="imgSaquese2"></canvas>
     <div id="colores"></div>
     <script>
