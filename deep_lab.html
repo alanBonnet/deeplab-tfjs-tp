@@ -16,7 +16,7 @@
     <input type="file" id="imagenInput" accept="image/*" onchange="cargarImagen(event)">
     <img id="imagenMostrada" src="" alt="">
     <canvas id="imgSaquese"></canvas>
-    <canvas id="imgSaquese2"></canvas>
+    
     <select id="mySelect">
         <option value="" hidden>Selecciona</option>
         <option value="pascal">pascal</option>
@@ -26,6 +26,10 @@
     <button id="btnGa"
         onclick="Pintado(canvasPintado2, `${document.getElementById('mySelect').value}`).then(pintarColores)">Analizar
         img</button>
+    <p><strong>Estado:</strong>
+    <p id="estado">Sin carga</p>
+    </p>
+    <canvas id="imgSaquese2"></canvas>
     <div id="colores"></div>
     <script>
         function cargarImagen(event) {
@@ -83,16 +87,30 @@
         //             );a(
 
         async function Pintado(canvas, modelName = "pascal") {
+            const estado = document.getElementById('estado')
+            estado.innerHTML = "";
+
+            const startTime = performance.now();
+
             const imgTensor = tf.browser.fromPixels(img)
             const cargamodelo = await loadModel(modelName);
             const canvoso = { canvas }
+
+
+
             const modeloentrenado = await cargamodelo.segment(img, canvoso)
             console.log(canvoso)
             imgTensor.dispose()
             console.log(modeloentrenado)
+            // mide el tiempo esta parte
+            var endTime = performance.now();
+            var tiempoTranscurrido = endTime - startTime;
+            estado.innerHTML = `Tardo ${tiempoTranscurrido}ms`;
+
             return { canvoso, modeloentrenado }
         }
         const pintarColores = (objectPintado) => {
+
             const { canvoso, modeloentrenado } = objectPintado;
             const colores = document.getElementById("colores")
             colores.innerHTML = ""
@@ -108,6 +126,7 @@
                 </span>
                 `
             }
+
         }
 
     </script>
