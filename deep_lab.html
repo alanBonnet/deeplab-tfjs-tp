@@ -40,6 +40,7 @@
             reader.onload = function () {
                 var dataURL = reader.result;
                 var imagenMostrada = document.getElementById('imagenMostrada');
+                imagenMostrada.style.maxWidth = "500px"
                 imagenMostrada.src = dataURL;
 
                 // Asignar la imagen a una variable
