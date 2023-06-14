@@ -13,7 +13,8 @@
 <body>
 
 
-    <img src="./descarga.jpg" id="imgPrueba" alt="">
+    <input type="file" id="imagenInput" accept="image/*" onchange="cargarImagen(event)">
+    <img id="imagenMostrada" src="" alt="Imagen cargada">
     <canvas id="imgSaquese"></canvas>
     <canvas id="imgSaquese2"></canvas>
     <select id="mySelect">
@@ -27,12 +28,29 @@
         img</button>
     <div id="colores"></div>
     <script>
+        function cargarImagen(event) {
+            var input = event.target;
+            var imagen = input.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function () {
+                var dataURL = reader.result;
+                var imagenMostrada = document.getElementById('imagenMostrada');
+                imagenMostrada.src = dataURL;
+
+                // Asignar la imagen a una variable
+                var imagenVariable = dataURL;
+                console.log(imagenVariable);
+            };
+
+            reader.readAsDataURL(imagen);
+        }
         const loadModel = async (nameModel) => {
             const modelName = nameModel;   // set to your preferred model, either `pascal`, `cityscapes` or `ade20k`
             const quantizationBytes = 2;  // either 1, 2 or 4
             return await deeplab.load({ base: modelName, quantizationBytes });
         };
-        const img = document.getElementById('imgPrueba')
+        const img = document.getElementById('imagenMostrada')
         const canvasPintado = document.getElementById('imgSaquese');
         const canvasPintado2 = document.getElementById('imgSaquese2');
 
