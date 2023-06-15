@@ -31,10 +31,6 @@
         <p style="display: inline-block;" id="estado">Sin carga</p>
     </div>
     <canvas id="imgSaquese2" style="display: flex;margin: .3rem auto; gap:3rem; width: min-content;"></canvas>
-    <!--  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto); -->
     <div id="colores" style="display: grid;margin: .3rem auto; grid-gap:3rem; width: min-content;grid-template-columns: repeat(3, 1fr);grid-auto-rows: minmax(100px,auto);"></div>
     <script>
         function cargarImagen(event) {
@@ -65,29 +61,6 @@
         const img = document.getElementById('imagenMostrada')
         const canvasPintado2 = document.getElementById('imgSaquese2');
 
-        // const input = tf.zeros([227, 500, 3]);
-        // ...
-        // const imgRelizeada = tf.image.resizeBilinear(imgTensor, [100, 100]).div(255)
-        // // console.log(imgRelizeada.dataSync());
-        // tf.browser.toPixels(imgRelizeada, canvasPintado)
-        // loadModel()
-        //     .then((model) => { console.log("pasado por el modelo xd"); return model.segment(imgTensor,{canvas:canvasPintado2}) })
-        //     .then(
-        //         (img) =>
-        //             {
-        //                 console.log(img)
-        //                 const segmentationMap = img["segmentationMap"]
-        //                 // const segmentationImage = deeplab.toSegmentationMap(segmentationMap);
-        //                 // console.log(deeplab)
-        //                 // console.log(deeplab.getColormap(segmentationMap))
-        //                 // const imgTensor = tf.tensor(segmentationMap).div(255)
-
-        //                 // console.log(tensorNuevoImgRelizeada)
-        //                 // tf.browser.toPixels(imgTensor, canvasPintado2)
-        //             }
-
-        //             );a(
-
         async function Pintado(canvas, modelName = "pascal") {
             const estado = document.getElementById('estado')
             estado.innerHTML = "Analizando imagen";
@@ -97,8 +70,6 @@
             const imgTensor = tf.browser.fromPixels(img)
             const cargamodelo = await loadModel(modelName);
             const canvoso = { canvas }
-
-
 
             const modeloentrenado = await cargamodelo.segment(img, canvoso)
             console.log(canvoso)
